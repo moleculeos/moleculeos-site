@@ -35,3 +35,13 @@ bin
 obj
 postgres
 Migrations
+
+# VS
+
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.vscode/
+project.lock.json
+project.fragment.lock.json
