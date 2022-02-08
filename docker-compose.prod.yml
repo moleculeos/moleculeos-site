@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+  db: 
+    image: postgres
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+    expose: 
+      - 5432:5432
+    networks:
+      - dotnet_net
+
+  dotnet:
+    build:
+      context: ./backend
+    restart: always
+    environment:
+      DB_CONNECTION_STRING: "Host=db;Database=${DB_NAME};Port=5432;Username=${DB_USER};Password=${DB_PASSWORD}"
+      ASPNETCORE_ENVIRONMENT: "Development"
+    networks:
+      - dotnet_net
+      - gateway
+    expose:
+      - 80:80
+    depends_on:
+      - db
+
+  proxy:
+    build:
+      context: ./proxy
+    restart: always
+    environment:
+      DOTNET_PORT: 80
+      DOTNET_HOST: dotnet
+    depends_on:
+      - dotnet
+    ports:
+      - 80:80
+    networks:
+      - gateway
+
+networks:
+  dotnet_net:
+  gateway:
