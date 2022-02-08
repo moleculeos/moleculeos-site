@@ -9,7 +9,7 @@ services:
     volumes:
       - ./postgres/data:/var/lib/postgresql/data
     expose: 
-      - 5432:5432
+      - "5432"
     networks:
       - dotnet_net
     
@@ -25,7 +25,7 @@ services:
     networks:
       - dotnet_net
     ports:
-      - 80:80
+      - "80:80"
     depends_on:
       - db
       
