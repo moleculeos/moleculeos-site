@@ -12,7 +12,7 @@ namespace MoleculeOSSite
         }
 
 
-        public void Seed()
+        public void SeedRole()
         {
             if(_context.Database.CanConnect())
             {

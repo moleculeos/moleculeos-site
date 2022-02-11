@@ -1,8 +1,12 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MoleculeOSSite;
 using MoleculeOSSite.Entities;
+using MoleculeOSSite.Models.Validators;
+using MoleculeOSSite.ModelsDTO;
 using MoleculeOSSite.Services;
 using System.Text;
 
@@ -31,15 +35,17 @@ builder.Services.AddAuthentication(option =>
     };
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddFluentValidation();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MyDbContext>();
 builder.Services.AddScoped<Seeder>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
-
+builder.Services.AddScoped<IValidator<User>, RegisterValidator>();
+builder.Services.AddScoped<IValidator<LoginDTO>, LoginValidator>();
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true); //Without this postgre throws DateTime error when executing DateTime.Now
 
@@ -54,7 +60,7 @@ using (var serviceScope = app.Services.CreateScope())
 
 var dbcontext = new MyDbContext();
 var seeder = new Seeder(dbcontext);
-seeder.Seed();//Add roles to db if not exist
+seeder.SeedRole();
 
 if (app.Environment.IsDevelopment())
 {

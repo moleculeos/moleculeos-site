@@ -67,8 +67,6 @@ namespace MoleculeOSSite.Services
 
         public void RegisterUser(User user)
         {
-                
-
                 var newUser = new User();
                 newUser.Username = user.Username;
                 newUser.Email = user.Email;
@@ -76,8 +74,7 @@ namespace MoleculeOSSite.Services
                 newUser.PasswordHash = _passwordHasher.HashPassword(newUser, user.PasswordHash);
 
                 _context.Users.Add(newUser);
-                _context.SaveChanges();
-            
+                _context.SaveChanges();   
         }
     }
 }
