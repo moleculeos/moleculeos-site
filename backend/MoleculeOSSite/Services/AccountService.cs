@@ -16,19 +16,15 @@ namespace MoleculeOSSite.Services
         string GenerateJwt(LoginDTO loginDto);
     }
 
-
     public class AccountService : IAccountService
     {
         private readonly MyDbContext _context;
         private readonly IPasswordHasher<User> _passwordHasher;
-        private readonly AuthenticationSettings _authenticationSettings;
 
-        public AccountService(MyDbContext context, IPasswordHasher<User> passwordHasher,
-            AuthenticationSettings authenticationSettings)
+        public AccountService(MyDbContext context, IPasswordHasher<User> passwordHasher)
         {
             _context = context;
-            _passwordHasher = passwordHasher;
-            _authenticationSettings = authenticationSettings;
+            _passwordHasher = passwordHasher;      
         }
 
         public User CheckLogin(LoginDTO loginDto)
@@ -60,12 +56,13 @@ namespace MoleculeOSSite.Services
                 new Claim(nameof(User.JoinDate), user.JoinDate.ToString("yyyy-MM-dd"))
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationSettings.JwtKey));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWT_KEY")));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddDays(_authenticationSettings.JwtExpireDays);
+            var days = Convert.ToInt32(Environment.GetEnvironmentVariable("JWT_EXPIRE_DAYS"));
+            var expires = DateTime.Now.AddDays(days);
 
-            var token = new JwtSecurityToken(_authenticationSettings.JwtIssuer,
-                _authenticationSettings.JwtIssuer,
+            var token = new JwtSecurityToken(Environment.GetEnvironmentVariable("JWT_ISSUER"),
+                Environment.GetEnvironmentVariable("JWT_ISSUER"),
                 claims,
                 expires:expires,
                 signingCredentials:credentials);
