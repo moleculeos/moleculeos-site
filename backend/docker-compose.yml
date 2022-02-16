@@ -15,7 +15,7 @@ services:
     
   dotnet:
     build:
-      context: ./backend
+      context: .
     environment:
       DB_HOST: "db"
       DB_NAME: ${DB_NAME}
