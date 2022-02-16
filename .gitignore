@@ -37,7 +37,8 @@ postgres
 Migrations
 
 # VS
-
+backend/MoleculeOSSite/.vs/*
+backend/MoleculeOsSite/Migrations/
 *.suo
 *.user
 *.userosscache

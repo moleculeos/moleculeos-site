@@ -11,12 +11,11 @@ namespace MoleculeOSSite
             _context = context;
         }
 
-
-        public void SeedRole()
+        public void SeedRoles()
         {
-            if(_context.Database.CanConnect())
+            if (_context.Database.CanConnect())
             {
-                if(!_context.Roles.Any())
+                if (!_context.Roles.Any())
                 {
                     var roles = GetRoles();
                     _context.Roles.AddRange(roles);

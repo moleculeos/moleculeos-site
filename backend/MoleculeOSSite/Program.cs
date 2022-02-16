@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MoleculeOSSite;
 using MoleculeOSSite.Entities;
+using MoleculeOSSite.Models.DTOs;
 using MoleculeOSSite.Models.Validators;
 using MoleculeOSSite.ModelsDTO;
 using MoleculeOSSite.Services;
@@ -15,7 +16,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 var authenticationSettings = new AuthenticationSettings();
-
 builder.Configuration.GetSection("Authentication").Bind(authenticationSettings);
 builder.Services.AddSingleton(authenticationSettings);
 builder.Services.AddAuthentication(option =>
@@ -40,11 +40,9 @@ builder.Services.AddControllers().AddFluentValidation();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MyDbContext>();
-builder.Services.AddScoped<Seeder>();
 builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
-builder.Services.AddScoped<IValidator<User>, RegisterValidator>();
+builder.Services.AddScoped<IValidator<RegisterDTO>, RegisterValidator>();
 builder.Services.AddScoped<IValidator<LoginDTO>, LoginValidator>();
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true); //Without this postgre throws DateTime error when executing DateTime.Now
@@ -60,7 +58,7 @@ using (var serviceScope = app.Services.CreateScope())
 
 var dbcontext = new MyDbContext();
 var seeder = new Seeder(dbcontext);
-seeder.SeedRole();
+seeder.SeedRoles();
 
 if (app.Environment.IsDevelopment())
 {

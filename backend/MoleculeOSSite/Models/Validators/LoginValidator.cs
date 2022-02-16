@@ -7,7 +7,7 @@ namespace MoleculeOSSite.Models.Validators
     {
         public LoginValidator()
         {
-            RuleFor(x=>x.UsernameOrEmail).NotEmpty();
+            RuleFor(x=>x.Login).NotEmpty();
             RuleFor(x=>x.Password).NotEmpty();
         }
     }

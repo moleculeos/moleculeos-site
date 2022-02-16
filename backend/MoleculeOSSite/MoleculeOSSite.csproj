@@ -3,10 +3,9 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>f8bb8646-a5bb-4fa4-b235-9ac08966df7d</UserSecretsId>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <AnalysisLevel>5.0</AnalysisLevel>
-    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
   </PropertyGroup>
 
