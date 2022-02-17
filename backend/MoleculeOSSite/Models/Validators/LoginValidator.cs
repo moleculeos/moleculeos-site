@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using MoleculeOSSite.ModelsDTO;
+using MoleculeOSSite.Models.DTOs;
 
 namespace MoleculeOSSite.Models.Validators
 {
@@ -7,8 +7,8 @@ namespace MoleculeOSSite.Models.Validators
     {
         public LoginValidator()
         {
-            RuleFor(x=>x.Login).NotEmpty();
-            RuleFor(x=>x.Password).NotEmpty();
+            RuleFor(x => x.Login).NotEmpty();
+            RuleFor(x => x.Password).NotEmpty();
         }
     }
 }

@@ -4,7 +4,7 @@ using MoleculeOSSite.Models.DTOs;
 
 namespace MoleculeOSSite.Models.Validators
 {
-    public class RegisterValidator:AbstractValidator<RegisterDTO>
+    public class RegisterValidator : AbstractValidator<RegisterDTO>
     {
         public RegisterValidator(MyDbContext dbcontext)
         {

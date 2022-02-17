@@ -1,5 +1,4 @@
-﻿
-namespace MoleculeOSSite.Entities
+﻿namespace MoleculeOSSite.Entities
 {
     public class Role
     {

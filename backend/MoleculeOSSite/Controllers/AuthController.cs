@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MoleculeOSSite.Entities;
 using MoleculeOSSite.Models.DTOs;
-using MoleculeOSSite.ModelsDTO;
 using MoleculeOSSite.Services;
 
 namespace MoleculeOSSite.Controllers
@@ -29,7 +28,8 @@ namespace MoleculeOSSite.Controllers
         public ActionResult Login([FromBody]LoginDTO loginDto)
         {
             string token = _accountService.GenerateJwt(loginDto);
-            return Ok(token);
+            
+            return Ok(new { token });
         }
     }
 }

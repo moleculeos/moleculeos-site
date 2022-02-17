@@ -7,7 +7,6 @@ using MoleculeOSSite;
 using MoleculeOSSite.Entities;
 using MoleculeOSSite.Models.DTOs;
 using MoleculeOSSite.Models.Validators;
-using MoleculeOSSite.ModelsDTO;
 using MoleculeOSSite.Services;
 using System.Text;
 
@@ -41,7 +40,7 @@ builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<RegisterDTO>, RegisterValidator>();
 builder.Services.AddScoped<IValidator<LoginDTO>, LoginValidator>();
 
-AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true); //Without this postgre throws DateTime error when executing DateTime.Now
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true); // Without this postgre throws DateTime error when executing DateTime.Now
 
 var app = builder.Build();
 

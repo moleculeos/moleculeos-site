@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MoleculeOSSite.Entities;
 using MoleculeOSSite.Models.DTOs;
-using MoleculeOSSite.ModelsDTO;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -27,21 +26,16 @@ namespace MoleculeOSSite.Services
             _passwordHasher = passwordHasher;      
         }
 
-        public User CheckLogin(LoginDTO loginDto)
+        public void RegisterUser(RegisterDTO registerDto)
         {
-            var user = _context.Users
-                .Include(u => u.Role)
-                .FirstOrDefault(u => u.Email == loginDto.Login || u.Username == loginDto.Login);
+            var newUser = new User();
+            newUser.Username = registerDto.Username;
+            newUser.Email = registerDto.Email;
+            newUser.JoinDate = DateTime.Now;
+            newUser.PasswordHash = _passwordHasher.HashPassword(newUser, registerDto.Password);
 
-            if (user == null)
-                throw new BadHttpRequestException("Invalid username or password");
-
-            var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, loginDto.Password);
-            if (result == PasswordVerificationResult.Failed)
-                throw new BadHttpRequestException("Invalid username or password");
-
-            else
-                return user;
+            _context.Users.Add(newUser);
+            _context.SaveChanges();
         }
 
         public string GenerateJwt(LoginDTO loginDto)
@@ -72,16 +66,20 @@ namespace MoleculeOSSite.Services
             return tokenHandler.WriteToken(token);
         }
 
-        public void RegisterUser(RegisterDTO registerDto)
+        private User CheckLogin(LoginDTO loginDto)
         {
-            var newUser = new User();
-            newUser.Username = registerDto.Username;
-            newUser.Email = registerDto.Email;
-            newUser.JoinDate = DateTime.Now;
-            newUser.PasswordHash = _passwordHasher.HashPassword(newUser, registerDto.Password);
+            var user = _context.Users
+                .Include(u => u.Role)
+                .FirstOrDefault(u => u.Email == loginDto.Login || u.Username == loginDto.Login);
 
-            _context.Users.Add(newUser);
-            _context.SaveChanges();   
+            if (user == null)
+                throw new BadHttpRequestException("Invalid login or password");
+
+            var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, loginDto.Password);
+            if (result == PasswordVerificationResult.Failed)
+                throw new BadHttpRequestException("Invalid login or password");
+
+            return user;
         }
     }
 }

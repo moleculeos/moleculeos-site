@@ -1,5 +1,4 @@
-﻿
-namespace MoleculeOSSite.Entities
+﻿namespace MoleculeOSSite.Entities
 {
     public class User
     {
@@ -9,7 +8,7 @@ namespace MoleculeOSSite.Entities
         public DateTime JoinDate { get; set; }
         public string PasswordHash { get; set; }
 
-        public int RoleId { get; set; } = 1; //Each user gets "User" role by default
+        public int RoleId { get; set; } = 1; // Each user gets "User" role by default
         public Role Role { get; set; }
     }
 }
