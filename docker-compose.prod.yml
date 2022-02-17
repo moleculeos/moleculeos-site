@@ -20,6 +20,9 @@ services:
     restart: always
     environment:
       DB_CONNECTION_STRING: "Host=db;Database=${DB_NAME};Port=5432;Username=${DB_USER};Password=${DB_PASSWORD}"
+      JWT_KEY: ${JWT_KEY}
+      JWT_EXPIRE_DAYS: ${JWT_EXPIRE_DAYS}
+      JWT_ISSUER: ${JWT_ISSUER}
       ASPNETCORE_ENVIRONMENT: "Development"
     networks:
       - dotnet_net
