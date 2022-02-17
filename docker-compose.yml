@@ -21,9 +21,9 @@ services:
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
-      JWT_KEY=PRIVATE_KEY_DONT_SHARE
-      JWT_EXPIRE_DAYS=4
-      JWT_ISSUER=http:/moleculeos.org/api
+      JWT_KEY: ${JWT_KEY}
+      JWT_EXPIRE_DAYS: ${JWT_EXPIRE_DAYS}
+      JWT_ISSUER: ${JWT_ISSUER}
       ASPNETCORE_ENVIRONMENT: "Development"
     networks:
       - dotnet_net
