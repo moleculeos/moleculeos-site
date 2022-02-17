@@ -9,6 +9,7 @@ namespace MoleculeOSSite.Models.Validators
         public RegisterValidator(MyDbContext dbcontext)
         {
             RuleFor(x => x.Email).NotEmpty().EmailAddress();
+            RuleFor(x => x.Username).NotEmpty();
             RuleFor(x => x.Password).NotEmpty().MinimumLength(6);
             RuleFor(x => x.Email).Custom((value, context) =>
             {
