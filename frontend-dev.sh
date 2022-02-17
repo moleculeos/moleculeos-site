@@ -2,4 +2,4 @@
 docker container stop $(docker container ls -a -q);
 docker container rm $(docker container ls -a -q);
 docker-compose down;
-docker-compose -f ./frontend/moleculeos-site/docker-compose.yml --env-file .env.dev up --build
+docker-compose -f ./moleculeos-site-frontend/docker-compose.yml --env-file .env.dev up --build

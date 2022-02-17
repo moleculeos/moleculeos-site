@@ -16,7 +16,7 @@ services:
 
   dotnet:
     build:
-      context: ./backend
+      context: ./moleculeos-site-backend
     restart: always
     environment:
       DB_CONNECTION_STRING: "Host=db;Database=${DB_NAME};Port=5432;Username=${DB_USER};Password=${DB_PASSWORD}"
