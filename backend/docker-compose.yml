@@ -7,7 +7,7 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - ./postgres/data:/var/lib/postgresql/data
+      - ../postgres/data:/var/lib/postgresql/data
     expose: 
       - "5432"
     networks:
@@ -15,15 +15,17 @@ services:
     
   dotnet:
     build:
-      context: ./backend
+      context: .
     environment:
       DB_HOST: "db"
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
+
       JWT_KEY: ${JWT_KEY}
       JWT_EXPIRE_DAYS: ${JWT_EXPIRE_DAYS}
       JWT_ISSUER: ${JWT_ISSUER}
+      
       ASPNETCORE_ENVIRONMENT: "Development"
     networks:
       - dotnet_net

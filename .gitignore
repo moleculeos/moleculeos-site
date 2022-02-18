@@ -10,7 +10,7 @@ node_modules
 /coverage
 
 # next.js
-/.next/
+.next
 /out/
 
 # production
@@ -25,16 +25,12 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.prod
 
 # Build files and directories
 bin
 obj
 postgres
-Migrations
 
 # VS
 backend/MoleculeOSSite/.vs/*
