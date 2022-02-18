@@ -19,8 +19,11 @@ services:
       context: ./moleculeos-site-backend
     restart: always
     environment:
-      DB_CONNECTION_STRING: "Host=db;Database=${DB_NAME};Port=5432;Username=${DB_USER};Password=${DB_PASSWORD}"
-      ASPNETCORE_ENVIRONMENT: "Development"
+      DB_HOST: "db"
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      ASPNETCORE_ENVIRONMENT: "Production"
     networks:
       - dotnet_net
       - gateway
@@ -29,15 +32,29 @@ services:
     depends_on:
       - db
 
+  nextjs:
+    build:
+      context: ./moleculeos-site-frontend
+    command: yarn start
+    restart: always
+    expose:
+      - "3000:3000"
+    depends_on:
+      - dotnet
+
   proxy:
     build:
       context: ./proxy
     restart: always
     environment:
-      DOTNET_PORT: 80
       DOTNET_HOST: dotnet
+      DOTNET_PORT: 80
+      # BUG: Repair the 'host not found in upstream "nextjs:3000"'
+      NEXTJS_HOST: nextjs
+      NEXTJS_PORT: 3000
     depends_on:
       - dotnet
+      - nextjs
     ports:
       - "80:80"
     networks:

@@ -7,8 +7,12 @@ COPY ./run.sh .
 COPY ./proxy_params.conf /etc/ngnix/proxy_params.conf
 
 ENV LISTEN_PORT=80
+
 ENV DOTNET_HOST=${DOTNET_HOST}
 ENV DOTNET_PORT=${DOTNET_PORT}
+
+ENV NEXTJS_HOST=${NEXTJS_HOST}
+ENV NEXTJS_PORT=${NEXTJS_PORT}
 
 USER root
 
